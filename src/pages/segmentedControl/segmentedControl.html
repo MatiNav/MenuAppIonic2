@@ -1,0 +1,68 @@
+<ion-header>
+
+    <ion-navbar no-border-bottom>
+        <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+         </button>
+        <ion-title>
+            Segments
+        </ion-title>
+    </ion-navbar>
+
+    <ion-toolbar no-border-top>
+        <ion-segment [(ngModel)]="segmento">
+            <ion-segment-button value="SearchBar">
+                SearchBar
+            </ion-segment-button>
+            <ion-segment-button value="DateTime">
+                DateTime
+            </ion-segment-button>
+        </ion-segment>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <div [ngSwitch]="segmento">
+        <div *ngSwitchCase="'SearchBar'">
+            <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
+            <ion-list>
+                <ion-item *ngFor="let item of items">
+                    {{ item }}
+                </ion-item>
+            </ion-list>
+        </div>
+        <div *ngSwitchCase="'DateTime'">
+            <ion-list>
+                <ion-list>
+                    <ion-item>
+                        <ion-label>Watering Mode</ion-label>
+                        <ion-select [(ngModel)]="zone.kind">
+                            <ion-option *ngFor="let key of modeKeys">{{key}}</ion-option>
+                        </ion-select>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label>Activar Boton</ion-label>
+                        <ion-select [(ngModel)]="enableButton" (change)="cambiarBoton($event)">
+                            <ion-option *ngFor="let key of listadoDeOpciones" >{{key}}</ion-option>
+                            <div>
+
+                            </div>
+                        </ion-select>
+                    </ion-item>
+                </ion-list>
+
+                <ion-list>
+                    <ion-item>
+                        <ion-label>Start Date</ion-label>
+                        <ion-datetime displayFormat="MMM DD YYYY" [(ngModel)]="event.month"></ion-datetime>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label>Start Time</ion-label>
+                        <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" [(ngModel)]="event.timeStarts"></ion-datetime>
+                    </ion-item>
+                </ion-list>
+                    <button ion-button [disabled]="enableButton==='No'" (click)="MuestraAlDeivid()"> Que sera esta vez ???</button>
+            </ion-list>
+        </div>
+    </div>
+</ion-content>
